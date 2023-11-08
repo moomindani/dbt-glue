@@ -63,8 +63,7 @@ jobs:
           python -m pip install mypy==0.942
           python -m pip install types-requests
           mypy --version
-          if [ -f requirements.txt ]; then python -m pip install -r requirements.txt
-          if [ -f dev-requirements.txt ]; then python -m pip install -r dev-requirements.txt
+          python -m pip install -r dev-requirements.txt
           dbt --version
 
       - name: Run pre-commit hooks
