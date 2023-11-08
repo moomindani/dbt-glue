@@ -23,7 +23,9 @@ on:
   pull_request:
   workflow_dispatch:
 
-permissions: read-all
+permissions:
+  id-token: write
+  contents: read
 
 # will cancel previous workflows triggered by the same event and for the same ref for PRs or same SHA otherwise
 concurrency:
@@ -102,9 +104,16 @@ jobs:
           python -m pip install tox
           tox --version
 
+      - name: Generate session name
+        id: session
+        run: |
+          repo="${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}"
+          echo "name=${repo}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" >> "${GITHUB_OUTPUT}"
+
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
+          role-session-name: ${{ steps.session.outputs.name }}
           role-to-assume: arn:aws:iam::${{ vars.DBT_AWS_ACCOUNT }}:role/dbt-glue
           aws-region: ${{ vars.DBT_GLUE_REGION }}
 
