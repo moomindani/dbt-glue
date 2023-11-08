@@ -117,15 +117,13 @@ jobs:
           role-to-assume: arn:aws:iam::${{ vars.DBT_AWS_ACCOUNT }}:role/dbt-glue
           aws-region: ${{ vars.DBT_GLUE_REGION }}
 
-      - name: Configure environment variables
-        run: |
-          export DBT_AWS_ACCOUNT=${{ vars.DBT_AWS_ACCOUNT }}
-          export DBT_S3_LOCATION=${{ vars.DBT_S3_LOCATION }}
-          export DBT_GLUE_ROLE_ARN=${{ vars.DBT_GLUE_ROLE_ARN }}
-          export DBT_GLUE_REGION=${{ vars.DBT_AWS_REGION }}
-
       - name: Run tox
-        run: tox
+        run: |
+          export DBT_AWS_ACCOUNT="::add-mask::${{ vars.DBT_AWS_ACCOUNT }}"
+          export DBT_S3_LOCATION="::add-mask::${{ vars.DBT_S3_LOCATION }}"
+          export DBT_GLUE_ROLE_ARN="::add-mask::${{ vars.DBT_GLUE_ROLE_ARN }}"
+          export DBT_GLUE_REGION="::add-mask::${{ vars.DBT_GLUE_REGION }}"
+          tox
 
       - name: Get current date
         if: always()
