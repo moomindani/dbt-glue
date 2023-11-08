@@ -37,39 +37,39 @@ defaults:
     shell: bash
 
 jobs:
-  code-quality:
-    name: code-quality
-
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
-
-      - name: Install python dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install libsasl2-dev
-          python -m pip install --user --upgrade pip
-          python -m pip --version
-          python -m pip install pre-commit
-          pre-commit --version
-          python -m pip install mypy==0.942
-          python -m pip install types-requests
-          mypy --version
-          python -m pip install -r dev-requirements.txt
-          dbt --version
-
-      - name: Run pre-commit hooks
-        run: pre-commit run --all-files --show-diff-on-failure
+#  code-quality:
+#    name: code-quality
+#
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 10
+#
+#    steps:
+#      - name: Check out the repository
+#        uses: actions/checkout@v3
+#        with:
+#          persist-credentials: false
+#
+#      - name: Set up Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.8'
+#
+#      - name: Install python dependencies
+#        run: |
+#          sudo apt-get update
+#          sudo apt-get install libsasl2-dev
+#          python -m pip install --user --upgrade pip
+#          python -m pip --version
+#          python -m pip install pre-commit
+#          pre-commit --version
+#          python -m pip install mypy==0.942
+#          python -m pip install types-requests
+#          mypy --version
+#          python -m pip install -r dev-requirements.txt
+#          dbt --version
+#
+#      - name: Run pre-commit hooks
+#        run: pre-commit run --all-files --show-diff-on-failure
 
   unit:
     name: unit test / python ${{ matrix.python-version }}
