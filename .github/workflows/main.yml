@@ -110,7 +110,7 @@ jobs:
           repo="${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}"
           echo "name=${repo}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" >> "${GITHUB_OUTPUT}"
 
-      - name: Configure AWS Credentials
+      - name: Configure AWS Credentials using GitHub variables
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-session-name: ${{ steps.session.outputs.name }}
