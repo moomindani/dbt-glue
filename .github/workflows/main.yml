@@ -120,7 +120,7 @@ jobs:
       - name: Run tox
         run: |
           export DBT_AWS_ACCOUNT=${{ vars.DBT_AWS_ACCOUNT }}
-          export DBT_S3_LOCATION=${{ vars.DBT_S3_LOCATION }}
+          export DBT_S3_LOCATION=${{ vars.DBT_S3_LOCATION }}/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}/${{ matrix.python-version }}/
           export DBT_GLUE_ROLE_ARN=${{ vars.DBT_GLUE_ROLE_ARN }}
           export DBT_GLUE_REGION=${{ vars.DBT_GLUE_REGION }}
           tox
