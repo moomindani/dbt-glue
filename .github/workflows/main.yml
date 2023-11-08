@@ -114,15 +114,15 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-session-name: ${{ steps.session.outputs.name }}
-          role-to-assume: arn:aws:iam::${{ vars.DBT_AWS_ACCOUNT }}:role/dbt-glue
-          aws-region: ${{ vars.DBT_GLUE_REGION }}
+          role-to-assume: arn:aws:iam::421396179189:role/dbt-glue
+          aws-region: us-east-1
 
       - name: Run tox
         run: |
-          export DBT_AWS_ACCOUNT=${{ vars.DBT_AWS_ACCOUNT }}
-          export DBT_S3_LOCATION=${{ vars.DBT_S3_LOCATION }}/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}/${{ matrix.python-version }}/
-          export DBT_GLUE_ROLE_ARN=${{ vars.DBT_GLUE_ROLE_ARN }}
-          export DBT_GLUE_REGION=${{ vars.DBT_GLUE_REGION }}
+          export DBT_AWS_ACCOUNT=421396179189
+          export DBT_S3_LOCATION=s3://dbt-glue-ci/data/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}/${{ matrix.python-version }}/
+          export DBT_GLUE_ROLE_ARN=arn:aws:iam::421396179189:role/GlueServiceRole
+          export DBT_GLUE_REGION=us-east-1
           tox
 
       - name: Get current date
