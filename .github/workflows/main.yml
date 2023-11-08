@@ -119,10 +119,10 @@ jobs:
 
       - name: Run tox
         run: |
-          export DBT_AWS_ACCOUNT=${{ vars.DBT_AWS_ACCOUNT }}
-          export DBT_S3_LOCATION=${{ vars.DBT_S3_LOCATION }}
-          export DBT_GLUE_ROLE_ARN=${{ vars.DBT_GLUE_ROLE_ARN }}
-          export DBT_GLUE_REGION=${{ vars.DBT_GLUE_REGION }}
+          echo "DBT_AWS_ACCOUNT=${{ vars.DBT_AWS_ACCOUNT }}" >> $GITHUB_ENV
+          echo "DBT_S3_LOCATION=${{ vars.DBT_S3_LOCATION }}" >> $GITHUB_ENV
+          echo "DBT_GLUE_ROLE_ARN=${{ vars.DBT_GLUE_ROLE_ARN }}" >> $GITHUB_ENV
+          echo "DBT_GLUE_REGION=${{ vars.DBT_GLUE_REGION }}" >> $GITHUB_ENV
           tox
 
       - name: Get current date
